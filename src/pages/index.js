@@ -11,6 +11,15 @@ const TEKS_HEADING = "Lapor BOI!"
 const ISSUE_URL = "https://github.com/artemtech/lapor-boi/issues"
 
 class Home extends Component {
+  
+  static async getInitialProps(ctx){
+    const res = await fetch("https://api.github.com/repos/BlankOn/Verbeek/issues")
+    const errorCode = res.ok ? false : res.statusCode
+    const json = await res.json()
+    return { openIssues: json.slice(0,3) }
+  }
+  
+
   render() {
     return (
       <Fragment>
@@ -38,10 +47,33 @@ class Home extends Component {
               <Col lg={4}>
                 <h3>Laporan Terkini</h3>
                 {/* list of tickets */}
-                <Tiket nomor_tiket="#12345" judul_tiket="Hello World 1" status_tiket="open" waktu_tiket="asdf" tiket_url="https://github.com/BlankOn/Verbeek/issues/1"/>
-                <Tiket nomor_tiket="#12346" judul_tiket="Hello World 2" status_tiket="open" waktu_tiket="asdf" tiket_url="https://github.com/BlankOn/Verbeek/issues/2"/>
-                <Tiket nomor_tiket="#12347" judul_tiket="Hello World 3" status_tiket="open" waktu_tiket="asdf" tiket_url="https://github.com/BlankOn/Verbeek/issues/3"/>
-                <Tiket nomor_tiket="#12348" judul_tiket="Hello World 4" status_tiket="open" waktu_tiket="asdf" tiket_url="https://github.com/BlankOn/Verbeek/issues/4"/>
+                {this.props.openIssues.map( (issue) => {
+                  console.log(issue.created_at, new Date().toISOString())
+                  let ddiff = (Date.now()) - (new Date(issue.created_at).getTime())
+                  console.log(ddiff)
+                  let data = {
+                      days: Math.floor(ddiff / (1000 * 60 * 60 * 24) ),
+                      hour: Math.floor((ddiff / (1000 * 60 * 60))),
+                      minute: Math.floor((ddiff / (1000 * 60)) % 60),
+                      second: Math.floor((ddiff / 1000 ) % 60)
+                  }
+                  let timestring = ""
+                  if (data.second > 0){
+                    timestring = `${data.second} detik lalu`
+                  }
+                  if (data.minute > 0){
+                    timestring = `${data.minute} menit lalu`
+                  }
+                  if (data.hour > 0){
+                    timestring = `${data.hour} jam lalu`
+                  }
+                  if (data.days > 0){
+                    timestring = `${data.days} hari lalu`
+                  }
+                  return (
+                    <Tiket key={issue.id} nomor_tiket={`#${issue.number}`} judul_tiket={issue.title} status_tiket={issue.state} waktu_tiket={timestring} tiket_url={issue.html_url}/>
+                  )
+                })}
                 
                 <Button className="rounded-0 mt-3" block>Lihat Laporan Lainnya</Button>
                 <h3 className="mt-3">Daftar Tim BlankOn</h3>
@@ -64,5 +96,6 @@ class Home extends Component {
     )
   }
 }
+
 
 export default Home
