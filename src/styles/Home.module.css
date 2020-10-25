@@ -1,0 +1,75 @@
+.header {
+  background: url("/images/mosaic0.png");
+  text-align: center;
+  height: 22rem;
+  align-items: center;
+  width: 100%;
+  min-width: 100%;
+  color: white;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  max-width: 768px;
+  height: 100%;
+}
+
+.container > h1 {
+  margin-top: auto;
+  margin-bottom: 20px;
+}
+
+.container > p {
+  margin-bottom: auto;
+}
+
+.main {
+  padding: 20px 10px;
+}
+
+.card {
+  padding: 20px 10px 20px;
+  background-color: #f6f7f8;
+  margin-bottom: 20px;
+}
+
+.tiket {
+  padding: 20px 10px 0px;
+}
+.tiket::after {
+  content: ' ';
+  display: block;
+  width: 95%;
+  height: 2px;
+  margin-right: auto;
+  margin-top: 12px;
+  background-color: #787878;
+  border-radius: 10px;
+}
+.tiket .nomor_tiket, .tiket .judul_tiket {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding-right: 10px;
+  width: 100%;
+  font-size: 1rem;
+  margin-bottom: 5px;
+  white-space: nowrap;
+}
+
+.tiket .status_tiket::before {
+  content: ' ';
+  display: inline-block;
+  background: green;
+  border-radius: 50px;
+  width: 10px;
+  height: 10px;
+  margin: 0;
+  margin-right: 5px;
+}
+
+.tiket .status_tiket {
+  margin-right: 10px;
+  color: green
+}
