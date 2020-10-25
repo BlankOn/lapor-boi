@@ -9,10 +9,27 @@ p {
   font-size: 1.3rem;
 }
 
+/* Form Lapor */
+
+.FormLapor {
+  padding: 20px 10px 20px;
+  background-color: #f6f7f8;
+  margin-bottom: 20px;
+}
+
+/* --Form Lapor */
+
 /* Tiket */
+
 .Tiket {
   padding: 20px 10px 0px;
+  cursor: pointer;
 }
+
+.Tiket:hover {
+  background: #f7f7f7;
+}
+
 .Tiket::after {
   content: ' ';
   display: block;
@@ -23,9 +40,11 @@ p {
   background-color: #c2c5f5;
   border-radius: 10px;
 }
+
 .Tiket .Tiket__NomorTiket, .Tiket .Tiket__WaktuTiket {
   color: #9e9e9e;
 }
+
 .Tiket .Tiket__NomorTiket, .Tiket .Tiket__JudulTiket {
   text-overflow: ellipsis;
   overflow: hidden;
