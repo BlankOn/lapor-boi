@@ -8,12 +8,12 @@ import styles from "../styles/Home.module.css"
 
 const teks_header = "Halaman untuk melaporkan kutu pada layanan BlankOn atau pengajuan permintaan fitur dan kerjasama"
 const TEKS_HEADING = "Lapor BOI!"
-const ISSUE_URL = "https://github.com/artemtech/lapor-boi/issues"
+const ISSUE_URL = "https://github.com/" + process.env.REPOSITORY + "/issues"
 
 class Home extends Component {
   
   static async getInitialProps(ctx){
-    const res = await fetch("https://api.github.com/repos/BlankOn/Verbeek/issues")
+    const res = await fetch(`https://api.github.com/repos/${process.env.REPOSITORY}/issues`)
     const errorCode = res.ok ? false : res.statusCode
     const json = await res.json()
     return { openIssues: json.slice(0,3) }
@@ -75,7 +75,7 @@ class Home extends Component {
                   )
                 })}
                 
-                <Button className="rounded-0 mt-3" block>Lihat Laporan Lainnya</Button>
+                <Button type="link" href={ISSUE_URL} className="rounded-0 mt-3" block>Lihat Laporan Lainnya</Button>
                 <h3 className="mt-3">Daftar Tim BlankOn</h3>
                 <ul>
                   <li>Tim Infrastruktur</li>
