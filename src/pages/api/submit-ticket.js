@@ -32,7 +32,7 @@ const sendDocument = async (messages, files) => {
   const ENDPOINT = BOT_URL + "/sendDocument"
   const payload = new FormData()
   payload.append('chat_id', GROUP_ID)
-  payload.append('document', fs.createReadStream(files))
+  payload.append('document', fs.createReadStream(files.path), files.name)
   payload.append('caption', messages)
   payload.append('parse_mode','HTML')
 
@@ -43,12 +43,15 @@ const sendDocument = async (messages, files) => {
 }
 
 export default async function handler (req, res){
-  const form = new formidable.IncomingForm()
-  // mengupload di projectdir/upload
-  form.uploadDir = "./uploads/"
-  form.keepExtensions = true
-  form.parse(req, async (err, fields, files) => {
-    const MESSAGES = `#TiketBaru untuk <strong>${fields.tim}</strong>
+  return new Promise( resolve => {
+    switch (req.method){
+      case "POST": {
+        const form = new formidable.IncomingForm()
+        // mengupload di projectdir/upload
+        form.uploadDir = "./uploads/"
+        form.keepExtensions = true
+        form.parse(req, async (err, fields, files) => {
+          const MESSAGES = `#TiketBaru untuk <strong>${fields.tim}</strong>
 
 <strong>Judul Laporan:</strong> 
 ${fields.judul}
@@ -64,41 +67,54 @@ Github: https://github.com/${fields.github}
 #${fields.tipe_laporan} #${fields.layanan} #PriorityUnknown
 <i>--Kurir LaporBoi!</i>
 `
-    if (files.lampiran){
-      try {
-        const results = await sendDocument(MESSAGES, files.lampiran.path)
-        const responses = await results.json()
-        if (responses.ok){
-          fs.unlink(files.lampiran.path, (err) => {
-            if (err){
-              console.log("error saat menghapus file: ", err)
+        if (files.lampiran){
+          try {
+            const results = await sendDocument(MESSAGES, files.lampiran)
+            const responses = await results.json()
+            if (responses.ok){
+              fs.unlink(files.lampiran.path, (err) => {
+                if (err){
+                  console.error("error saat menghapus file: ", err)
+                  res.status(500).end()
+                  return resolve()
+                }
+              })
+              res.status(200).json({error: false, pesan: "Sukses mengirim laporan"})
+              return resolve()
             }
-          })
-          res.statusCode = 200
-          return res.status(200).json({error: false, pesan: "Sukses mengirim laporan"})
-        }
-        res.statusCode = responses.error_code
-        return res.status(responses.error_code).json({error: true, pesan: responses.description})
+            res.statusCode = responses.error_code
+            res.status(responses.error_code).json({error: true, pesan: responses.description})
+            return resolve()
 
-      } catch (error) {
-        console.log("pas di files lampiran", error)
-      }
-    }
-    else {
-      try {
-        const results = await sendMessage(MESSAGES)
-        const responses = await results.json()
-        if (responses.ok){
-          res.statusCode = 200
-          return res.status(200).json({error: false, pesan: "Sukses mengirim laporan"})
+          } catch (error) {
+            console.log("pas di files lampiran", error)
+            res.status(500).end()
+            return resolve()
+          }
         }
-        res.statusCode = responses.error_code
-        return res.status(responses.error_code).json({error: true, pesan: responses.description})
-      } catch (error) {
-        console.log("pas di bawah response", error)
+        else {
+          try {
+            const results = await sendMessage(MESSAGES)
+            const responses = await results.json()
+            if (responses.ok){
+              res.statusCode = 200
+              res.status(200).json({error: false, pesan: "Sukses mengirim laporan"})
+              return resolve()
+            }
+            res.statusCode = responses.error_code
+            res.status(responses.error_code).json({error: true, pesan: responses.description})
+            return resolve()
+          } catch (error) {
+            console.error("pas di bawah response", error)
+            res.status(500).end()
+            return resolve()
+          }
+          // end block sendmessage
+        }
+        // end lampiran
+      })
+
       }
-      // end block sendmessage
     }
-    // end lampiran
   })
 }
