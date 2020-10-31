@@ -2695,7 +2695,14 @@ form-data@^3.0.0:
     combined-stream "^1.0.8"
     mime-types "^2.1.12"
 
-formidable@^1.2.2:
+formidable-serverless@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/formidable-serverless/-/formidable-serverless-1.0.3.tgz#5023c04b394bddcf4f6d27bfbe1c7d89dd1e5368"
+  integrity sha512-BT47bmGBk3V2kQwNPBvM5SY1Ypc08CnFinBOp05gVrH+4g7ZlxYX6kQtC8wuLjH+Qcj0Re10PY2VxBlpNIWGGQ==
+  dependencies:
+    formidable "^1.2.1"
+
+formidable@^1.2.1, formidable@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/formidable/-/formidable-1.2.2.tgz#bf69aea2972982675f00865342b982986f6b8dd9"
   integrity sha512-V8gLm+41I/8kguQ4/o1D3RIHRmhYFG4pnNyonvua+40rqcEmT4+V71yaZ3B457xbbgCsCfjSPi65u/W6vK1U5Q==

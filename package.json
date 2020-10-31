@@ -11,6 +11,7 @@
     "bootstrap": "^4.5.3",
     "form-data": "^3.0.0",
     "formidable": "^1.2.2",
+    "formidable-serverless": "^1.0.3",
     "next": "9.5.5",
     "react": "17.0.1",
     "react-bootstrap": "^1.4.0",

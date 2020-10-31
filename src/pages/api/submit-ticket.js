@@ -1,5 +1,4 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import formidable from 'formidable'
 import fs from 'fs'
 import FormData from "form-data"
 
@@ -9,8 +8,14 @@ export const config = {
   }
 }
 
-const { BOT_TOKEN, GROUP_ID } = process.env
+const { BOT_TOKEN, GROUP_ID, DEPLOY_MODE } = process.env
 const BOT_URL = "https://api.telegram.org/bot" + BOT_TOKEN
+
+if (DEPLOY_MODE == "serverless"){
+  import formidable from 'formidable-serverless'
+}else{
+  import formidable from 'formidable'
+}
 
 const sendMessage = async (messages) => {
   const ENDPOINT = BOT_URL + "/sendMessage"
