@@ -1,6 +1,13 @@
 import { Component } from 'react'
 import {Card, Row, Col, Button, Form} from 'react-bootstrap'
 
+const TEMPLATE_LAPORAN = `Harapan:\r\n
+Yang Terjadi:\r\n\r\n
+Skenario:\r\n
+`
+
+const TIMEOUT_RELOAD_FORM = 5000
+
 class FormLapor extends Component {
 
     constructor(props) {
@@ -10,11 +17,11 @@ class FormLapor extends Component {
             nama: null,
             email: null,
             github: null,
-            tipe_laporan: null,
-            layanan: null,
-            tim: null,
+            tipe_laporan: "",
+            layanan: "",
+            tim: "Semua Tim",
             judul: null,
-            deskripsi: null,
+            deskripsi: TEMPLATE_LAPORAN,
             isSubmitting: false,
             afterSubmit: false,
             errors: null
@@ -35,11 +42,11 @@ class FormLapor extends Component {
                 nama: null,
                 email: null,
                 github: null,
-                // tipe_laporan: null,
-                // layanan: null,
-                // tim: null,
+                tipe_laporan: "",
+                layanan: "",
+                tim: "Semua Tim",
                 judul: null,
-                deskripsi: null,
+                deskripsi: TEMPLATE_LAPORAN,
                 isSubmitting: false,
                 afterSubmit: true,
                 errors: null
@@ -49,7 +56,7 @@ class FormLapor extends Component {
             }
             setTimeout(() => {
                 this.setState(newState)
-            }, 2000);
+            }, TIMEOUT_RELOAD_FORM);
         })
     }
 
@@ -64,7 +71,7 @@ class FormLapor extends Component {
     }
 
     async doUploadForm(){
-      const url = process.env.SITE_URL + '/api/submit-ticket'
+      const url = '/api/submit-ticket'
       const data = new FormData()
       if (this.state.lampiran){
         data.append('lampiran',this.state.lampiran)
@@ -72,9 +79,9 @@ class FormLapor extends Component {
       data.append('nama',this.state.nama)
       data.append('email',this.state.email)
       data.append('github',this.state.github)
-      // data.append('tipe_laporan',this.state.tipe_laporan)
-      // data.append('layanan',this.state.layanan)
-      // data.append('tim',this.state.tim)
+      data.append('tipe_laporan',this.state.tipe_laporan)
+      data.append('layanan',this.state.layanan)
+      data.append('tim',this.state.tim)
       data.append('judul',this.state.judul)
       data.append('deskripsi',this.state.deskripsi)
       return await fetch(url, {
@@ -98,6 +105,7 @@ class FormLapor extends Component {
 
     render() {
         if (this.state.isSubmitting) {
+          // ditampilkan ketika submit form
             return (<div>Mengirimkan laporan tiket...</div>)
         }
 
@@ -117,27 +125,46 @@ class FormLapor extends Component {
                     </Col>
                     <Col lg={4} className="mb-2 mb-lg-0">
                       <Form.Label htmlFor="github">Username Github</Form.Label>
-                      <Form.Control required onChange={this.onFieldChanged} type="text" name="github" />
+                      <Form.Control onChange={this.onFieldChanged} type="text" name="github" />
                     </Col>
                   </Form.Row>
-                  {/* <Form.Row className="mt-3">
+                  <Form.Row className="mt-3">
                     <Col lg={4} className="mb-2 mb-lg-0">
                       <Form.Label htmlFor="tipe_laporan">Tipe Laporan</Form.Label>
-                      <Form.Control onChange={this.onFieldChanged} name="tipe_laporan" as="select">
-                        <option>satu</option>
-                        <option>dua</option>
-                        <option>tiga</option>
+                      <Form.Control onChange={this.onFieldChanged} value={this.state.tipe_laporan} name="tipe_laporan" as="select">
+                        <option value="" disabled>Pilih</option>
+                        <option value="LaporanKutu">Laporan Kutu</option>
+                        <option value="PermintaanFitur">Permintaan Fitur</option>
+                        <option value="PermintaanKerjasama">Permintaan Kerjasama</option>
+                        <option value="Lain-lain">Lain-lain</option>
                       </Form.Control>
                     </Col>
                     <Col lg={4} className="mb-2 mb-lg-0">
                       <Form.Label htmlFor="layanan">Layanan/Fitur</Form.Label>
-                      <Form.Control onChange={this.onFieldChanged} type="text" name="layanan" />
+                      <Form.Control onChange={this.onFieldChanged} as="select" value={this.state.layanan} name="layanan">
+                        <option value="" disabled>Pilih</option>
+                        <option value="Manokwari">Manokwari</option>
+                        <option value="DistroBlankon">Distro Blankon</option>
+                        <option value="PanduanBlankOn">Panduan BlankOn</option>
+                        <option value="Website ">Website </option>
+                        <option value="Kerjasama">Kerjasama</option>
+                        <option value="Lain-lain">Lain-lain</option>
+                      </Form.Control>
                     </Col>
                     <Col lg={4} className="mb-2 mb-lg-0">
                       <Form.Label htmlFor="tim">Tim BlankOn</Form.Label>
-                      <Form.Control onChange={this.onFieldChanged} type="text" name="tim" />
+                      <Form.Control onChange={this.onFieldChanged} as="select" value={this.state.tim} name="tim">
+                        <option value="Semua Tim">Semua</option>
+                        <option value="Tim Infrastruktur">Tim Infrastruktur</option>
+                        <option value="Tim Pemaket">Tim Pemaket</option>
+                        <option value="Tim Riset">Tim Riset</option>
+                        <option value="Tim Dokumentasi">Tim Dokumentasi</option>
+                        <option value="Tim Jaminan Kualitas">Tim Jaminan Kualitas</option>
+                        <option value="Tim Kesenian">Tim Kesenian</option>
+                        <option value="Tim Humas">Tim Humas</option>
+                      </Form.Control>
                     </Col>
-                  </Form.Row> */}
+                  </Form.Row>
                 </Card>
                 <h3>Rincian Laporan</h3>
                 <Card className="FormLapor">
@@ -150,7 +177,7 @@ class FormLapor extends Component {
                   <Form.Row className="mt-3">
                     <Col>
                       <Form.Label htmlFor="deskripsi">Deskripsi Laporan</Form.Label>
-                      <Form.Control required onChange={this.onFieldChanged} name="deskripsi" rows={10} as="textarea" />
+                      <Form.Control required onChange={this.onFieldChanged} value={this.state.deskripsi} name="deskripsi" rows={10} as="textarea" />
                     </Col>
                   </Form.Row>
                   <Form.Row className="mt-3">
