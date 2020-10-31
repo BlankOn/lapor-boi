@@ -48,9 +48,7 @@ class Home extends Component {
                 <h3>Laporan Terkini</h3>
                 {/* list of tickets */}
                 {this.props.openIssues.map( (issue) => {
-                  console.log(issue.created_at, new Date().toISOString())
                   let ddiff = (Date.now()) - (new Date(issue.created_at).getTime())
-                  console.log(ddiff)
                   let data = {
                       days: Math.floor(ddiff / (1000 * 60 * 60 * 24) ),
                       hour: Math.floor((ddiff / (1000 * 60 * 60))),
