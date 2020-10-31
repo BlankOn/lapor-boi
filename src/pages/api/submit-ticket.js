@@ -54,7 +54,7 @@ export default async function handler (req, res){
         const form = new theform.IncomingForm()
         // mengupload di projectdir/upload
         if (DEPLOY_MODE == "serverless"){
-          form.uploadDir = "./"
+          form.uploadDir = "/tmp/"
         }else{
           form.uploadDir = "./uploads/"
         }
