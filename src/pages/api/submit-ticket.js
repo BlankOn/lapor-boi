@@ -42,28 +42,26 @@ const sendDocument = async (messages, files) => {
   })
 }
 
-export default async (req, res) => {
+export default async function handler (req, res){
   const form = new formidable.IncomingForm()
   // mengupload di projectdir/upload
   form.uploadDir = "./uploads/"
   form.keepExtensions = true
   form.parse(req, async (err, fields, files) => {
-    console.log(files)
-    
-    const MESSAGES = `#TiketBaru untuk <strong>Tim Hore</strong>
+    const MESSAGES = `#TiketBaru untuk <strong>${fields.tim}</strong>
 
 <strong>Judul Laporan:</strong> 
 ${fields.judul}
 
 <strong>Deskripsi:</strong>
-<pre>${fields.deskripsi}</pre>
+${fields.deskripsi}
 
-
+---
 <strong>Pelapor</strong>: 
 ${fields.nama} (${fields.email})  
 Github: https://github.com/${fields.github}
 
-#RequestFeature #PriorityUnknown
+#${fields.tipe_laporan} #${fields.layanan} #PriorityUnknown
 <i>--Kurir LaporBoi!</i>
 `
     if (files.lampiran){
