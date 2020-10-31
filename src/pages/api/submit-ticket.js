@@ -53,7 +53,11 @@ export default async function handler (req, res){
         }
         const form = new theform.IncomingForm()
         // mengupload di projectdir/upload
-        form.uploadDir = "./uploads/"
+        if (DEPLOY_MODE == "serverless"){
+          form.uploadDir = "./"
+        }else{
+          form.uploadDir = "./uploads/"
+        }
         form.keepExtensions = true
         form.parse(req, async (err, fields, files) => {
           const MESSAGES = `#TiketBaru untuk <strong>${fields.tim}</strong>
