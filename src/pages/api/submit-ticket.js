@@ -11,12 +11,6 @@ export const config = {
 const { BOT_TOKEN, GROUP_ID, DEPLOY_MODE } = process.env
 const BOT_URL = "https://api.telegram.org/bot" + BOT_TOKEN
 
-if (DEPLOY_MODE == "serverless"){
-  import formidable from 'formidable-serverless'
-}else{
-  import formidable from 'formidable'
-}
-
 const sendMessage = async (messages) => {
   const ENDPOINT = BOT_URL + "/sendMessage"
   let payload = {
@@ -51,7 +45,13 @@ export default async function handler (req, res){
   return new Promise( resolve => {
     switch (req.method){
       case "POST": {
-        const form = new formidable.IncomingForm()
+        let theform = null
+        if (DEPLOY_MODE == "serverless"){
+         theform = require('formidable-serverless')
+        }else{
+          theform = require('formidable')
+        }
+        const form = new theform.IncomingForm()
         // mengupload di projectdir/upload
         form.uploadDir = "./uploads/"
         form.keepExtensions = true
