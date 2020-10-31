@@ -50,12 +50,21 @@ export default async (req, res) => {
   form.parse(req, async (err, fields, files) => {
     console.log(files)
     
-    const MESSAGES = `Ada laporan masuk nih:
-Pelapor: ${fields.nama} - \(${fields.email}\)
-Username Github: ${fields.github}\n
-Judul: ${fields.judul}
-Deskripsi:
+    const MESSAGES = `#TiketBaru untuk <strong>Tim Hore</strong>
+
+<strong>Judul Laporan:</strong> 
+${fields.judul}
+
+<strong>Deskripsi:</strong>
 <pre>${fields.deskripsi}</pre>
+
+
+<strong>Pelapor</strong>: 
+${fields.nama} (${fields.email})  
+Github: https://github.com/${fields.github}
+
+#RequestFeature #PriorityUnknown
+<i>--Kurir LaporBoi!</i>
 `
     if (files.lampiran){
       try {
