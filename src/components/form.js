@@ -6,7 +6,7 @@ Yang Terjadi:\r\n\r\n
 Skenario:\r\n
 `
 
-const TIMEOUT_RELOAD_FORM = 5000
+const TIMEOUT_RELOAD_FORM = 2000
 
 class FormLapor extends Component {
 
@@ -17,8 +17,8 @@ class FormLapor extends Component {
             nama: null,
             email: null,
             github: null,
-            tipe_laporan: "",
-            layanan: "",
+            tipe_laporan: "LaporanKutu",
+            layanan: "Lain-lain",
             tim: "Semua Tim",
             judul: null,
             deskripsi: TEMPLATE_LAPORAN,
@@ -29,6 +29,7 @@ class FormLapor extends Component {
         this.onFormSubmit = this.onFormSubmit.bind(this)
         this.onFieldChanged = this.onFieldChanged.bind(this)
         this.doUploadForm = this.doUploadForm.bind(this)
+        this.handleResetForm = this.handleResetForm.bind(this)
     }
 
     onFormSubmit(e) {
@@ -42,8 +43,8 @@ class FormLapor extends Component {
                 nama: null,
                 email: null,
                 github: null,
-                tipe_laporan: "",
-                layanan: "",
+                tipe_laporan: "LaporanKutu",
+                layanan: "Lain-lain",
                 tim: "Semua Tim",
                 judul: null,
                 deskripsi: TEMPLATE_LAPORAN,
@@ -58,6 +59,26 @@ class FormLapor extends Component {
                 this.setState(newState)
             }, TIMEOUT_RELOAD_FORM);
         })
+    }
+
+    handleResetForm(){
+      console.log("Adfdfafdssfd")
+      let newState = this.state
+      newState = {
+        lampiran: null,
+        nama: null,
+        email: null,
+        github: null,
+        tipe_laporan: "LaporanKutu",
+        layanan: "Lain-lain",
+        tim: "Semua Tim",
+        judul: null,
+        deskripsi: TEMPLATE_LAPORAN,
+        isSubmitting: false,
+        afterSubmit: false,
+        errors: null
+      }
+      this.setState(newState)
     }
 
     onFieldChanged(e) {
@@ -84,10 +105,11 @@ class FormLapor extends Component {
       data.append('tim',this.state.tim)
       data.append('judul',this.state.judul)
       data.append('deskripsi',this.state.deskripsi)
-      return await fetch(url, {
+      const response = await fetch(url, {
         method: 'POST',
         body: data
       })
+      return await response.json()
     }
 
     showLogStatus(){
@@ -104,14 +126,30 @@ class FormLapor extends Component {
     }
 
     render() {
-        if (this.state.isSubmitting) {
-          // ditampilkan ketika submit form
-            return (<div>Mengirimkan laporan tiket...</div>)
+      if (this.state.isSubmitting) {
+        // ditampilkan ketika submit form
+          return (<div>Mengirimkan laporan...</div>)
+      }
+      if (this.state.afterSubmit) {
+        // ditampilkan ketika submit form
+          return (<div className="container text-center">
+            <Row>
+              <Col lg={12}>
+                <img className="img-fluid" alt="done" src="/images/img-done.svg"/>
+              </Col>
+              <Col className="mt-3" lg={12}>
+                {this.showLogStatus()}
+              </Col>
+              <Col className="mt-3" lg={12}>
+                <Button onClick={this.handleResetForm} className="rounded-0">Kirim Laporan Lain</Button>
+              </Col>
+            </Row>
+
+            </div>)
         }
 
         return (
             <Form onSubmit={this.onFormSubmit}>
-                {this.showLogStatus()}
                 <h3>Informasi Laporan</h3>
                 <Card className="FormLapor">
                   <Form.Row>
@@ -132,7 +170,6 @@ class FormLapor extends Component {
                     <Col lg={4} className="mb-2 mb-lg-0">
                       <Form.Label htmlFor="tipe_laporan">Tipe Laporan</Form.Label>
                       <Form.Control onChange={this.onFieldChanged} value={this.state.tipe_laporan} name="tipe_laporan" as="select">
-                        <option value="" disabled>Pilih</option>
                         <option value="LaporanKutu">Laporan Kutu</option>
                         <option value="PermintaanFitur">Permintaan Fitur</option>
                         <option value="PermintaanKerjasama">Permintaan Kerjasama</option>
@@ -142,7 +179,6 @@ class FormLapor extends Component {
                     <Col lg={4} className="mb-2 mb-lg-0">
                       <Form.Label htmlFor="layanan">Layanan/Fitur</Form.Label>
                       <Form.Control onChange={this.onFieldChanged} as="select" value={this.state.layanan} name="layanan">
-                        <option value="" disabled>Pilih</option>
                         <option value="Manokwari">Manokwari</option>
                         <option value="DistroBlankon">Distro Blankon</option>
                         <option value="PanduanBlankOn">Panduan BlankOn</option>
