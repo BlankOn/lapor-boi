@@ -16,7 +16,7 @@ const sendMessage = async (messages) => {
   let payload = {
     chat_id: GROUP_ID,
     text: messages,
-    parse_mode: "HTML"
+    parse_mode: "markdown"
   }
   return await fetch(ENDPOINT, {
     method: 'POST',
@@ -33,7 +33,7 @@ const sendDocument = async (messages, files) => {
   payload.append('chat_id', GROUP_ID)
   payload.append('document', fs.createReadStream(files.path), files.name)
   payload.append('caption', messages)
-  payload.append('parse_mode','HTML')
+  payload.append('parse_mode','markdown')
 
   return await fetch(ENDPOINT, {
     method: 'POST',
@@ -60,15 +60,15 @@ export default async function handler (req, res){
         }
         form.keepExtensions = true
         form.parse(req, async (err, fields, files) => {
-          const MESSAGES = `#TiketBaru tentang #${fields.layanan} untuk <strong>${fields.tim}</strong>
+          const MESSAGES = `#TiketBaru tentang #${fields.layanan} untuk *${fields.tim}*
 
-<strong>Judul Laporan:</strong> 
+*Judul Laporan:* 
 ${fields.judul}
 
-<pre>${fields.deskripsi}</pre>
+${fields.deskripsi}
 
 ---
-<strong>Pelapor</strong>: 
+*Pelapor* 
 ${fields.nama} (${fields.email})  
 Github: https://github.com/${fields.github}
 

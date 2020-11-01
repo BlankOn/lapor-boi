@@ -1,10 +1,10 @@
 import { Component } from 'react'
 import {Card, Row, Col, Button, Form} from 'react-bootstrap'
 
-const TEMPLATE_LAPORAN = `Deskripsi Ringkas:\r\n\r\n
-Hal yang diharapkan:\r\n\r\n
-Hal yang terjadi:\r\n\r\n
-Langkah-langkah yang dilakukan:
+const TEMPLATE_LAPORAN = `*Deskripsi Ringkas*:\r\n\r\n
+*Hal yang diharapkan*:\r\n\r\n
+*Hal yang terjadi*:\r\n\r\n
+*Langkah-langkah yang dilakukan*:
 1. 
 2. 
 3. \r\n\r\n

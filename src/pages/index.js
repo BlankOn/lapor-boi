@@ -74,7 +74,8 @@ class Home extends Component {
                 })}
                 
                 <Button type="link" href={ISSUE_URL} className="rounded-0 mt-3" block>Lihat Laporan Lainnya</Button>
-                <h3 className="mt-3">Daftar Tim BlankOn</h3>
+                <br></br>
+                {/* <h3 className="mt-3">Daftar Tim BlankOn</h3>
                 <ul>
                   <li>Tim Infrastruktur</li>
                   <li>Tim Pemaket</li>
@@ -84,6 +85,27 @@ class Home extends Component {
                   <li>Tim Kesenian</li>
                   <li>Tim Humas</li>
                 </ul>
+                <br></br> */}
+                <h5 className="mt-3"><strong>Panduan Ringkas Format Penulisan</strong></h5>
+                <div styles="font-size:1rem !important;">Penulisan format laporan mendukung format markdown versi 2. Berikut ini adalah beberapa formating yang dapat Anda gunakan:</div>
+                <ul>
+                  <li><strong>*Teks Tebal*</strong> </li>
+                  <li><i>_Cetak Miring_</i></li>
+                  <li><u>__Garis Bawah__</u></li>
+                  <li><strike>~Coret Teks~</strike></li>
+                  <li><a href="https://blankonlinux.or.id/">[Tautan](https://blankonlinux.or.id/)</a> </li>
+                  <li><pre>`Inline Preformated`</pre></li>
+                  <li> Preformated Block</li>
+                  <div>
+                    <pre>
+                    ```bash <br></br>
+                    echo "Your Code" <br></br>
+                    ```</pre>
+                  </div>
+                </ul>
+                <di>
+                  Penulisan format yang tidak sesuai dengan gaya format Markdown V2 mungkin dapat menyebabkan laporan gagal dikirim.
+                </di>
               </Col>
               {/* end sidebar */}
             </Row>
