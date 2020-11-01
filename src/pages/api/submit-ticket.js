@@ -60,20 +60,20 @@ export default async function handler (req, res){
         }
         form.keepExtensions = true
         form.parse(req, async (err, fields, files) => {
-          const MESSAGES = `#TiketBaru untuk <strong>${fields.tim}</strong>
+          const MESSAGES = `#TiketBaru tentang #${fields.layanan} untuk <strong>${fields.tim}</strong>
 
 <strong>Judul Laporan:</strong> 
 ${fields.judul}
 
-<strong>Deskripsi:</strong>
-${fields.deskripsi}
+<pre>${fields.deskripsi}</pre>
 
 ---
 <strong>Pelapor</strong>: 
 ${fields.nama} (${fields.email})  
 Github: https://github.com/${fields.github}
 
-#${fields.tipe_laporan} #${fields.layanan} #PriorityUnknown
+#${fields.tipe_laporan}
+
 <i>--Kurir LaporBoi!</i>
 `
         if (files.lampiran){

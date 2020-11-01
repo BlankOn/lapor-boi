@@ -1,9 +1,14 @@
 import { Component } from 'react'
 import {Card, Row, Col, Button, Form} from 'react-bootstrap'
 
-const TEMPLATE_LAPORAN = `Harapan:\r\n
-Yang Terjadi:\r\n\r\n
-Skenario:\r\n
+const TEMPLATE_LAPORAN = `Deskripsi Ringkas:\r\n\r\n
+Hal yang diharapkan:\r\n\r\n
+Hal yang terjadi:\r\n\r\n
+Langkah-langkah yang dilakukan:
+1. 
+2. 
+3. \r\n\r\n
+Apakah hal ini selalu terjadi? (Ya/Tidak)\r\n\r\n
 `
 
 const TIMEOUT_RELOAD_FORM = 2000
@@ -128,7 +133,7 @@ class FormLapor extends Component {
     render() {
       if (this.state.isSubmitting) {
         // ditampilkan ketika submit form
-          return (<div>Mengirimkan laporan...</div>)
+          return (<div><p class="text-center">Sedang Mengirim Laporan Anda ...</p></div>)
       }
       if (this.state.afterSubmit) {
         // ditampilkan ketika submit form
