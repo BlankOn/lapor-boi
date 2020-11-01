@@ -178,7 +178,7 @@ class FormLapor extends Component {
                         <option value="LaporanKutu">Laporan Kutu</option>
                         <option value="PermintaanFitur">Permintaan Fitur</option>
                         <option value="PermintaanKerjasama">Permintaan Kerjasama</option>
-                        <option value="Lain-lain">Lain-lain</option>
+                        <option value="LainLain">Lain-lain</option>
                       </Form.Control>
                     </Col>
                     <Col lg={4} className="mb-2 mb-lg-0">
@@ -189,7 +189,7 @@ class FormLapor extends Component {
                         <option value="PanduanBlankOn">Panduan BlankOn</option>
                         <option value="Website ">Website </option>
                         <option value="Kerjasama">Kerjasama</option>
-                        <option value="Lain-lain">Lain-lain</option>
+                        <option value="LainLain">Lain-lain</option>
                       </Form.Control>
                     </Col>
                     <Col lg={4} className="mb-2 mb-lg-0">
