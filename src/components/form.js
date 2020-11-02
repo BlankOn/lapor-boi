@@ -23,7 +23,7 @@ class FormLapor extends Component {
             email: null,
             github: null,
             tipe_laporan: "LaporanKutu",
-            layanan: "Lain-lain",
+            layanan: "LainLain",
             tim: "Semua Tim",
             judul: null,
             deskripsi: TEMPLATE_LAPORAN,
@@ -49,7 +49,7 @@ class FormLapor extends Component {
                 email: null,
                 github: null,
                 tipe_laporan: "LaporanKutu",
-                layanan: "Lain-lain",
+                layanan: "LainLain",
                 tim: "Semua Tim",
                 judul: null,
                 deskripsi: TEMPLATE_LAPORAN,
@@ -67,7 +67,6 @@ class FormLapor extends Component {
     }
 
     handleResetForm(){
-      console.log("Adfdfafdssfd")
       let newState = this.state
       newState = {
         lampiran: null,
@@ -75,7 +74,7 @@ class FormLapor extends Component {
         email: null,
         github: null,
         tipe_laporan: "LaporanKutu",
-        layanan: "Lain-lain",
+        layanan: "LainLain",
         tim: "Semua Tim",
         judul: null,
         deskripsi: TEMPLATE_LAPORAN,
