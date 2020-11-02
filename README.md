@@ -1,30 +1,53 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# LaporBOI
 
-## Getting Started
+Platform penghubung tiket dengan Telegram berbasis [Next.JS](https://nextjs.org).
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
+## Menjalankan LaporBOI
+
+### Langkah pertama - membuat bot telegram
+
+- LaporBOI membutuhkan kredensial Bot Telegram supaya dapat bekerja.
+Jika belum punya bot telegram, buatlah dengan bantuan https://t.me/BotFather,
+lalu catat Bot Token nya.
+
+- Buatlah grup atau channel telegram,
+- Undang bot yang tadi sudah dibuat ke dalam grup/channel
+- Berikan akses bot sebagai admin
+
+### Langkah kedua - mendapatkan group_id / channel_id**  
+GroupID / ChannelID Telegram diperlukan untuk mengirimkan notifikasi laporan tiket.  
+- undanglah bot bernama Telegram Bot Raw (@RawDataBot) ke dalam channel/grup
+- setelah ditambahkan, RawDataBot akan menampilkan data grup anda seperti ini kira-kira (lihatlah chat id).
+```
+...
+"chat": {
+    "id": -123456789, <------ catat ini
+    "title": "grupku",
+    "type": "group",
+    "all_members_are_administrators": false
+},
+...
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Langkah tiga - menjalankan di atas docker**  
+Prasyarat:  
+- terpasang docker
+- terpasang docker-compose
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+1. Salin berkas `.env.sample` ke `.env`, dan sesuaikan isinya
+2. `docker-compose -f docker-compose.yml build`
+2. `docker-compose -f docker-compose.yml up -d`
+3. aplikasi berjalan di port 3000, anda bisa cek di http://localhost:3000
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+## Mengembangkan LaporBOI
+prasyarat:
+- nodejs 11
+- yarn, pasang dengan cara `npm install -g yarn`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. Salin berkas `.env.sample` ke `.env`, dan sesuaikan isinya
+2. jalankan perintah `yarn dev`
+3. lakukan perubahan kode, otomatis reload
+4. aplikasi dev berjalan di port 3000, anda bisa cek di http://localhost:3000
