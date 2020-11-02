@@ -74,7 +74,7 @@ Github: https://github.com/${fields.github}
 
 #${fields.tipe_laporan}
 
-<i>--Kurir LaporBoi!</i>
+--_Kurir LaporBoi!_
 `
         if (files.lampiran){
           try {
