@@ -15,20 +15,21 @@ lalu catat Bot Token nya.
 - Undang bot yang tadi sudah dibuat ke dalam grup/channel
 - Berikan akses bot sebagai admin
 
-### Langkah kedua - mendapatkan group_id / channel_id**  
+### Langkah kedua - mendapatkan group_id / channel_id 
 GroupID / ChannelID Telegram diperlukan untuk mengirimkan notifikasi laporan tiket.  
 - undanglah bot bernama Telegram Bot Raw (@RawDataBot) ke dalam channel/grup
 - setelah ditambahkan, RawDataBot akan menampilkan data grup anda seperti ini kira-kira (lihatlah chat id).
 ```
 ...
 "chat": {
-    "id": -123456789, <------ catat ini
+    "id": -123456789, <------ salin -123456789 ke GROUP_ID pada berkas .env
     "title": "grupku",
     "type": "group",
     "all_members_are_administrators": false
 },
 ...
 ```
+- 
 
 ### Langkah tiga - menjalankan di atas docker**  
 Prasyarat:  
@@ -51,3 +52,9 @@ prasyarat:
 2. jalankan perintah `yarn dev`
 3. lakukan perubahan kode, otomatis reload
 4. aplikasi dev berjalan di port 3000, anda bisa cek di http://localhost:3000
+
+
+## Fitur
+- [x] Kirim ke telegram
+- [x] Kirim attachment ke telegram
+- [ ] Bikin tiket otomatis ke github
